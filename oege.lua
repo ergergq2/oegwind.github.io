@@ -1355,29 +1355,12 @@ function WindUI:CreateWindow(options)
     end
 
     local function minimizeWindow()
-        if not WindUI.Minimized then
-            WindUI.Minimized = true
-            mainFrame.Visible = false
-            if WindUI.OpenButton then
-                WindUI.OpenButton.Visible = true
-            end
-        else
-            WindUI.Minimized = false
-            mainFrame.Visible = true
-            if WindUI.OpenButton then
-                WindUI.OpenButton.Visible = false
-            end
-        end
-    end
-
-    local closeBtn = createControlButton("x", function()
+        WindUI.Minimized = true
         mainFrame.Visible = false
-        if WindUI.OpenButton then
+        if WindUI.OpenButton and WindUI.OpenButton.Parent then
             WindUI.OpenButton.Visible = true
         end
-    end, Color3.fromRGB(220, 38, 38))
-
-    windowData.CloseButton = closeBtn
+    end
 
     local contentHolder = WindUI.New("Frame", {
         Name = "ContentHolder",
@@ -1408,7 +1391,7 @@ function WindUI:CreateWindow(options)
 
         local textWidth = 150
         if WindowData and WindowData.OpenButtonData then
-            local btnTitle = WindowData.OpenButtonData.Title or "Open"
+            local btnTitle = WindowData.OpenButtonData.Title or "Open The Script"
             local btnIcon = WindowData.OpenButtonData.Icon
             local btnColor = WindowData.OpenButtonData.Color
             local btnDraggable = WindowData.OpenButtonData.Draggable
@@ -1469,7 +1452,9 @@ function WindUI:CreateWindow(options)
             
             WindUI.OpenButton = openBtn
         else
-            WindUI.OpenButton.Visible = true
+            if WindUI.OpenButton and WindUI.OpenButton.Parent then
+                WindUI.OpenButton.Visible = true
+            end
         end
     end
 
