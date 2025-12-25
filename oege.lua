@@ -1406,12 +1406,13 @@ function WindUI:CreateWindow(options)
                 BorderSizePixel = 0,
             }),
             WindUI.New("ImageLabel", {
-                Size = UDim2.new(0, 16, 0, 16),
+                Size = UDim2.new(0, 18, 0, 18),
                 Position = UDim2.new(0.5, 0, 0.5, 0),
                 AnchorPoint = Vector2.new(0.5, 0.5),
                 BackgroundTransparency = 1,
-                Image = "rbxassetid://10747379654", -- Grabbable handle icon (+)
+                Image = "rbxassetid://6031091000", -- Plus/Drag icon
                 ImageColor3 = WindUI.Scheme.Text,
+                ZIndex = 10,
                 Parent = dragHandle,
             }),
             WindUI.New("Frame", { -- Vertical separator line
