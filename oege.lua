@@ -1431,7 +1431,7 @@ function WindUI:CreateWindow(options)
             Size = UDim2.new(1, -32, 1, 0),
             Position = UDim2.new(0, 32, 0, 0),
             BackgroundTransparency = 1,
-            Text = "Open The Script",
+            Text = "Open RINGTA Scripts",
             TextColor3 = WindUI.Scheme.Text,
             FontFace = Font.new(WindUI.Font, Enum.FontWeight.SemiBold),
             TextSize = 14,
