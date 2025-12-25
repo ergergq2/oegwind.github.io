@@ -1392,26 +1392,43 @@ function WindUI:CreateWindow(options)
 
         local dragHandle = WindUI.New("Frame", {
             Name = "DragHandle",
-            Size = UDim2.new(0, 30, 1, 0),
-            BackgroundTransparency = 1,
+            Size = UDim2.new(0, 32, 1, 0),
+            BackgroundColor3 = WindUI.Scheme.Accent,
+            BackgroundTransparency = 0.5,
             Parent = openBtn,
         }, {
+            WindUI.New("UICorner", { CornerRadius = UDim.new(0, 8) }),
+            WindUI.New("Frame", { -- This hides the right rounded corners of the handle
+                Size = UDim2.new(0, 10, 1, 0),
+                Position = UDim2.new(1, -10, 0, 0),
+                BackgroundColor3 = WindUI.Scheme.Accent,
+                BackgroundTransparency = 0.5,
+                BorderSizePixel = 0,
+            }),
             WindUI.New("ImageLabel", {
                 Size = UDim2.new(0, 16, 0, 16),
                 Position = UDim2.new(0.5, 0, 0.5, 0),
                 AnchorPoint = Vector2.new(0.5, 0.5),
                 BackgroundTransparency = 1,
-                Image = "rbxassetid://10747379654", -- Grabbable handle icon
+                Image = "rbxassetid://10747379654", -- Grabbable handle icon (+)
                 ImageColor3 = WindUI.Scheme.Text,
-                ImageTransparency = 0.5,
+                Parent = dragHandle,
+            }),
+            WindUI.New("Frame", { -- Vertical separator line
+                Name = "Separator",
+                Size = UDim2.new(0, 1, 0, 18),
+                Position = UDim2.new(1, 0, 0.5, 0),
+                AnchorPoint = Vector2.new(1, 0.5),
+                BackgroundColor3 = WindUI.Scheme.Outline,
+                BackgroundTransparency = 0.5,
                 Parent = dragHandle,
             })
         })
 
         local realButton = WindUI.New("TextButton", {
             Name = "RealButton",
-            Size = UDim2.new(1, -30, 1, 0),
-            Position = UDim2.new(0, 30, 0, 0),
+            Size = UDim2.new(1, -32, 1, 0),
+            Position = UDim2.new(0, 32, 0, 0),
             BackgroundTransparency = 1,
             Text = "Open The Script",
             TextColor3 = WindUI.Scheme.Text,
