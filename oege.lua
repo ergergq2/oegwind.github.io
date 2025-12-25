@@ -1373,16 +1373,12 @@ function WindUI:CreateWindow(options)
     })
 
     if not WindUI.OpenButton then
-        local openBtn = WindUI.New("TextButton", {
-            Name = "OpenButton",
-            Size = UDim2.new(0, 150, 0, 32),
-            Position = UDim2.new(0.5, 0, 0.5, 0),
-            AnchorPoint = Vector2.new(0.5, 0.5),
+        local openBtn = WindUI.New("Frame", {
+            Name = "OpenButtonContainer",
+            Size = UDim2.new(0, 180, 0, 32),
+            Position = UDim2.new(0.5, 0, 0, 10),
+            AnchorPoint = Vector2.new(0.5, 0),
             BackgroundColor3 = WindUI.Scheme.Button,
-            Text = "Open The Script",
-            TextColor3 = WindUI.Scheme.Text,
-            FontFace = Font.new(WindUI.Font, Enum.FontWeight.SemiBold),
-            TextSize = 14,
             Visible = false,
             Parent = screenGui,
         }, {
@@ -1394,16 +1390,46 @@ function WindUI:CreateWindow(options)
             }),
         })
 
-        openBtn.MouseButton1Click:Connect(function()
+        local dragHandle = WindUI.New("Frame", {
+            Name = "DragHandle",
+            Size = UDim2.new(0, 30, 1, 0),
+            BackgroundTransparency = 1,
+            Parent = openBtn,
+        }, {
+            WindUI.New("ImageLabel", {
+                Size = UDim2.new(0, 16, 0, 16),
+                Position = UDim2.new(0.5, 0, 0.5, 0),
+                AnchorPoint = Vector2.new(0.5, 0.5),
+                BackgroundTransparency = 1,
+                Image = "rbxassetid://10747379654", -- Grabbable handle icon
+                ImageColor3 = WindUI.Scheme.Text,
+                ImageTransparency = 0.5,
+                Parent = dragHandle,
+            })
+        })
+
+        local realButton = WindUI.New("TextButton", {
+            Name = "RealButton",
+            Size = UDim2.new(1, -30, 1, 0),
+            Position = UDim2.new(0, 30, 0, 0),
+            BackgroundTransparency = 1,
+            Text = "Open The Script",
+            TextColor3 = WindUI.Scheme.Text,
+            FontFace = Font.new(WindUI.Font, Enum.FontWeight.SemiBold),
+            TextSize = 14,
+            Parent = openBtn,
+        })
+
+        realButton.MouseButton1Click:Connect(function()
             mainFrame.Visible = true
             WindUI.Toggled = true
             openBtn.Visible = false
         end)
 
+        WindUI.Drag(openBtn, { dragHandle })
         WindUI.OpenButton = openBtn
     else
         WindUI.OpenButton.Visible = false
-        WindUI.OpenButton.Text = "Open The Script"
     end
 
     local minimizeBtn = createControlButton("minus", minimizeWindow, Color3.fromRGB(244, 201, 72))
