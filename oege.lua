@@ -1303,13 +1303,15 @@ function WindUI:CreateWindow(options)
     })
 
     local controlsContainer = WindUI.New("Frame", {
-        Size = UDim2.new(0, 80, 1, 0),
+        Size = UDim2.new(0, 40, 1, 0),
+        Position = UDim2.new(1, -50, 0, 0),
         BackgroundTransparency = 1,
         Parent = topbar,
     }, {
         WindUI.New("UIListLayout", {
             FillDirection = Enum.FillDirection.Horizontal,
             HorizontalAlignment = Enum.HorizontalAlignment.Right,
+            VerticalAlignment = Enum.VerticalAlignment.Center,
             Padding = UDim.new(0, 6),
         }),
     })
@@ -1377,7 +1379,10 @@ function WindUI:CreateWindow(options)
             Position = UDim2.new(0.5, 0, 0.5, 0),
             AnchorPoint = Vector2.new(0.5, 0.5),
             BackgroundColor3 = WindUI.Scheme.Button,
-            TextTransparency = 1,
+            Text = "Open The Script",
+            TextColor3 = WindUI.Scheme.Text,
+            FontFace = Font.new(WindUI.Font, Enum.FontWeight.SemiBold),
+            TextSize = 14,
             Visible = false,
             Parent = screenGui,
         }, {
@@ -1389,73 +1394,16 @@ function WindUI:CreateWindow(options)
             }),
         })
 
-        local textWidth = 150
-        if WindowData and WindowData.OpenButtonData then
-            local btnTitle = WindowData.OpenButtonData.Title or "Open The Script"
-            local btnIcon = WindowData.OpenButtonData.Icon
-            local btnColor = WindowData.OpenButtonData.Color
-            local btnDraggable = WindowData.OpenButtonData.Draggable
+        openBtn.MouseButton1Click:Connect(function()
+            mainFrame.Visible = true
+            WindUI.Toggled = true
+            openBtn.Visible = false
+        end)
 
-            if btnColor then
-                local gradient = Instance.new("UIGradient")
-                gradient.Color = btnColor
-                gradient.Parent = openBtn
-            end
-            
-            local contentFrame = WindUI.New("Frame", {
-                Size = UDim2.new(1, 0, 1, 0),
-                BackgroundTransparency = 1,
-                Parent = openBtn,
-            }, {
-                WindUI.New("UIListLayout", {
-                    FillDirection = Enum.FillDirection.Horizontal,
-                    VerticalAlignment = Enum.VerticalAlignment.Center,
-                    HorizontalAlignment = Enum.HorizontalAlignment.Center,
-                    Padding = UDim.new(0, 8),
-                }),
-            })
-            
-            if btnIcon and WindUI.Icons then
-                local iconData = WindUI.Icon(btnIcon)
-                if iconData then
-                    WindUI.New("ImageLabel", {
-                        Size = UDim2.new(0, 16, 0, 16),
-                        BackgroundTransparency = 1,
-                        Image = iconData[1],
-                        ImageRectSize = iconData[2] and iconData[2].ImageRectSize or Vector2.new(0, 0),
-                        ImageRectOffset = iconData[2] and iconData[2].ImageRectPosition or Vector2.new(0, 0),
-                        ImageColor3 = WindUI.Scheme.Text,
-                        Parent = contentFrame,
-                    })
-                end
-            end
-            
-            WindUI.New("TextLabel", {
-                Size = UDim2.new(0, textWidth - (btnIcon and 40 or 20), 1, 0),
-                BackgroundTransparency = 1,
-                Text = btnTitle,
-                TextColor3 = WindUI.Scheme.Text,
-                FontFace = Font.new(WindUI.Font, Enum.FontWeight.SemiBold),
-                TextSize = 14,
-                Parent = contentFrame,
-            })
-            
-            openBtn.MouseButton1Click:Connect(function()
-                mainFrame.Visible = true
-                WindUI.Toggled = true
-                openBtn.Visible = false
-            end)
-            
-            if btnDraggable then
-                WindUI.Drag(openBtn, { openBtn })
-            end
-            
-            WindUI.OpenButton = openBtn
-        else
-            if WindUI.OpenButton and WindUI.OpenButton.Parent then
-                WindUI.OpenButton.Visible = true
-            end
-        end
+        WindUI.OpenButton = openBtn
+    else
+        WindUI.OpenButton.Visible = false
+        WindUI.OpenButton.Text = "Open The Script"
     end
 
     local minimizeBtn = createControlButton("minus", minimizeWindow, Color3.fromRGB(244, 201, 72))
